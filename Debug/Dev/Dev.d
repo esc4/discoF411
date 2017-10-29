@@ -25,7 +25,8 @@ Dev/Dev.o: ../Dev/Dev.c ../Dev/Dev.h \
  D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h \
  D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h \
  D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
- D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+ D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+ D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/i2c.h
 
 ../Dev/Dev.h:
 
@@ -82,3 +83,5 @@ D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/I
 D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 
 D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
+
+D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/i2c.h:

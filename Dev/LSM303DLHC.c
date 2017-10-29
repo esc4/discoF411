@@ -3,7 +3,7 @@
 
 void ACC_Conf()
 {
-	uint8_t TxBufferCtrlRegEnAll = 0x33; // Enable 1 Hz + Enable all axes
+	uint8_t TxBufferCtrlRegEnAll = 0x37; // Enable 1 Hz + Enable all axes
 	uint8_t TxBufferCTRL_REG4_A = 0xA8;	// output registers not updated until MSB and LSB have been read
 
 	if((HAL_I2C_Mem_Write(&hi2c1, (uint16_t)ACC_ADD, (uint16_t)CTRL_REG1_A, (uint16_t)I2C_MEMADD_SIZE_8BIT, &TxBufferCtrlRegEnAll, 1, 10000)) != HAL_OK)
@@ -25,8 +25,17 @@ void ACC_Conf()
 
 void MAG_Conf()
 {
+	uint8_t TxBufferMR_REG_M = 0x00;	//Continuous-conversion mode
 
+	if((HAL_I2C_Mem_Write(&hi2c1, (uint16_t)MAG_ADD, (uint16_t)MR_REG_M, (uint16_t)I2C_MEMADD_SIZE_8BIT, &TxBufferMR_REG_M, 1, 10000)) != HAL_OK)
+	{
+	  if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
+	  {
+		Error_Handler();
+	  }
+	}
 }
+
 void ACC_GetXYZ(uint8_t* pBuffer, int16_t* pX, int16_t* pY, int16_t* pZ)
 {
   if((HAL_I2C_Mem_Read(&hi2c1, (uint16_t)ACC_ADD, (uint16_t)OUT_X_L_A |0x80, (uint16_t)I2C_MEMADD_SIZE_8BIT, (uint8_t *)pBuffer, (uint16_t)6, 10000)) != HAL_OK)
@@ -85,5 +94,17 @@ void ACC_LedMode(int16_t x, int16_t y, int16_t z)
 
 void MAG_GetXYZ(uint8_t* pBuffer, int16_t* pX, int16_t* pY, int16_t* pZ)
 {
-
+  if((HAL_I2C_Mem_Read(&hi2c1, (uint16_t)MAG_ADD, (uint16_t)OUT_X_H_M, (uint16_t)I2C_MEMADD_SIZE_8BIT, (uint8_t *)pBuffer, (uint16_t)6, 10000)) != HAL_OK)
+	{
+	  if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
+	  {
+		Error_Handler();
+	  }
+	}
+	*pX = (pBuffer[0]<<8) | pBuffer[1] ;
+	*pX /= 16;
+	*pZ = (pBuffer[2]<<8) | pBuffer[3] ;
+	*pZ /= 16;
+	*pY = (pBuffer[4]<<8) | pBuffer[5] ;
+	*pY /= 16;
 }

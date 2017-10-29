@@ -40,10 +40,9 @@
 #include "stm32f4xx_hal.h"
 #include "i2c.h"
 #include "gpio.h"
-#include "LSM303DLHC.h"
-
 /* USER CODE BEGIN Includes */
-
+#include "LSM303DLHC.h"
+#include "Dev.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -68,10 +67,12 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	uint8_t RxBufferOut[6] = {0,0,0,0,0,0};
-	int16_t outX = 0;
-	int16_t outY = 0;
-	int16_t outZ = 0;
+	uint8_t RxBufferACC[6] = {0,0,0,0,0,0};
+	uint8_t RxBufferMAG[6] = {0,0,0,0,0,0};
+	int16_t outLX, outLY, outLZ = 0;
+	int16_t outMX, outMY, outMZ = 0;
+
+	uint8_t RxBufferDebug = 0;
 /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -97,6 +98,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   ACC_Conf();
+  MAG_Conf();
   DEV_LedInterlude1();
   DEV_LedInterlude2();
   /* USER CODE END 2 */
@@ -107,8 +109,9 @@ int main(void)
   {
 //	  while((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) == 0) {}
 //	  while((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) == 1) {}
-	  ACC_GetXYZ(RxBufferOut, &outX, &outY, &outZ);
-	  ACC_LedMode(outX, outY, outZ);
+	  ACC_GetXYZ(RxBufferACC, &outLX, &outLY, &outLZ);
+	  MAG_GetXYZ(RxBufferMAG, &outMX, &outMY, &outMZ);
+	  ACC_LedMode(outLX, outLY, outLZ);
 
    /* USER CODE END WHILE */
   /* USER CODE BEGIN 3 */

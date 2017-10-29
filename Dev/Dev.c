@@ -66,3 +66,14 @@ uint8_t CheckBit(uint8_t bitInt, uint8_t pos)
 {
 	return (bitInt & (1<<pos));
 }
+
+void DEV_I2CReadRegister(uint16_t add, uint16_t registeradd, uint8_t * pBuffer)
+{
+	if((HAL_I2C_Mem_Read(&hi2c1, (uint16_t)add, (uint16_t)registeradd, (uint16_t)I2C_MEMADD_SIZE_8BIT, (uint8_t *)pBuffer, (uint16_t)6, 10000)) != HAL_OK)
+		{
+		  if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
+		  {
+			Error_Handler();
+		  }
+		}
+}

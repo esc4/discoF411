@@ -29,7 +29,8 @@ Src/main.o: ../Src/main.c \
  D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/i2c.h \
  D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/gpio.h \
- D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Dev/LSM303DLHC.h
+ D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Dev/LSM303DLHC.h \
+ D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Dev/Dev.h
 
 D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/main.h:
 
@@ -92,3 +93,5 @@ D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/i2c.h:
 D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Inc/gpio.h:
 
 D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Dev/LSM303DLHC.h:
+
+D:/Embedded_workspace/SW4STM32_workspace/F411_pr2/Dev/Dev.h:
