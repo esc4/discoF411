@@ -40,6 +40,7 @@
 #include "stm32f4xx_hal.h"
 #include "i2c.h"
 #include "gpio.h"
+
 /* USER CODE BEGIN Includes */
 #include "LSM303DLHC.h"
 #include "Dev.h"
@@ -66,6 +67,7 @@ void SystemClock_Config(void);
 
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 	uint8_t RxBufferACC[6] = {0,0,0,0,0,0};
 	uint8_t RxBufferMAG[6] = {0,0,0,0,0,0};
@@ -73,7 +75,7 @@ int main(void)
 	int16_t outMX, outMY, outMZ = 0;
 
 	uint8_t RxBufferDebug = 0;
-/* USER CODE END 1 */
+  /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
 
@@ -94,13 +96,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
-  HAL_I2C_MspInit(&hi2c1);
 
   /* USER CODE BEGIN 2 */
+  HAL_I2C_MspInit(&hi2c1);
+
   ACC_Conf();
   MAG_Conf();
   DEV_LedInterlude1();
   DEV_LedInterlude2();
+  DEV_I2CReadRegister(MAG_ADD, CRB_REG_M, &RxBufferDebug);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,7 +117,8 @@ int main(void)
 	  MAG_GetXYZ(RxBufferMAG, &outMX, &outMY, &outMZ);
 	  ACC_LedMode(outLX, outLY, outLZ);
 
-   /* USER CODE END WHILE */
+  /* USER CODE END WHILE */
+
   /* USER CODE BEGIN 3 */
 
   }

@@ -38,19 +38,21 @@ void MAG_Conf()
 
 void ACC_GetXYZ(uint8_t* pBuffer, int16_t* pX, int16_t* pY, int16_t* pZ)
 {
-  if((HAL_I2C_Mem_Read(&hi2c1, (uint16_t)ACC_ADD, (uint16_t)OUT_X_L_A |0x80, (uint16_t)I2C_MEMADD_SIZE_8BIT, (uint8_t *)pBuffer, (uint16_t)6, 10000)) != HAL_OK)
-	{
-	  if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
-	  {
-		Error_Handler();
-	  }
-	}
-	*pX = (pBuffer[1]<<8) | pBuffer[0] ;
-	*pX /= 16;
-	*pY = (pBuffer[3]<<8) | pBuffer[2] ;
-	*pY /= 16;
-	*pZ = (pBuffer[5]<<8) | pBuffer[4] ;
-	*pZ /= 16;
+
+	  if((HAL_I2C_Mem_Read(&hi2c1, (uint16_t)ACC_ADD, (uint16_t)OUT_X_L_A |0x80, (uint16_t)I2C_MEMADD_SIZE_8BIT, (uint8_t *)pBuffer, (uint16_t)6, 10000)) != HAL_OK)
+		{
+		  if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
+		  {
+			Error_Handler();
+		  }
+		}
+		*pX = (pBuffer[1]<<8) | pBuffer[0] ;
+		*pX /= 16;
+		*pY = (pBuffer[3]<<8) | pBuffer[2] ;
+		*pY /= 16;
+		*pZ = (pBuffer[5]<<8) | pBuffer[4] ;
+		*pZ /= 16;
+
 }
 
 void ACC_LedMode(int16_t x, int16_t y, int16_t z)

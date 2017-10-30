@@ -11,6 +11,7 @@
 #define OUT_X_H_A (0x29)
 
 #define MAG_ADD (0x1E<<1)
+#define CRB_REG_M (0x01)
 #define MR_REG_M (0x02)
 #define OUT_X_H_M (0x03)
 
