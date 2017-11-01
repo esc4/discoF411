@@ -10,6 +10,11 @@
 #include "stm32f4xx_hal.h"
 #include "i2c.h"
 
+typedef enum userMode {
+	Acc,
+	Compass
+} userMode;
+
 void DEV_LedInterlude1();
 void DEV_LedInterlude2();
 
