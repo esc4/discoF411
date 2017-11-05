@@ -15,9 +15,21 @@ typedef enum userMode {
 	Compass
 } userMode;
 
+/*Globals*/
+extern uint8_t ITdet;
+extern uint8_t ITpb;
+extern userMode CurrentMode;
+
+
+/*App functions*/
+void ModeExecution (void);
 void DEV_LedInterlude1();
 void DEV_LedInterlude2();
+void DEV_LedClear();
+void DEV_LedModeAcc();
+void DEV_LedModeMag();
 
+/* Helper functions*/
 int16_t ConvertTwoComplement(uint16_t);
 uint8_t CheckBit(uint8_t, uint8_t);
 

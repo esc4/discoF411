@@ -6,7 +6,11 @@
  */
 
 #include "Dev.h"
+#include "LSM303DLHC.h"
 
+userMode CurrentMode = Acc;
+uint8_t ITdet = 0;
+uint8_t ITpb = 0;
 
 void DEV_LedInterlude1()
 {
@@ -42,6 +46,41 @@ void DEV_LedInterlude2()
 	HAL_Delay(100);
 	}
 }
+void DEV_LedClear(void)
+{
+	HAL_GPIO_WritePin(GPIOD,LD3_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD,LD4_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD,LD5_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD,LD6_Pin, GPIO_PIN_RESET);
+}
+void DEV_LedModeAcc(void)
+{
+	for (int i =0; i<3; i++)
+		{
+		HAL_GPIO_WritePin(GPIOD, LD4_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOD, LD5_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOD, LD6_Pin, GPIO_PIN_SET);
+		HAL_Delay(100);
+		HAL_GPIO_WritePin(GPIOD,LD4_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD,LD5_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD,LD6_Pin, GPIO_PIN_RESET);
+		HAL_Delay(100);
+		}
+}
+void DEV_LedModeMag(void)
+{
+	for (int i =0; i<3; i++)
+		{
+		HAL_GPIO_WritePin(GPIOD, LD4_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOD, LD5_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOD, LD3_Pin, GPIO_PIN_SET);
+		HAL_Delay(100);
+		HAL_GPIO_WritePin(GPIOD,LD4_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD,LD5_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD,LD3_Pin, GPIO_PIN_RESET);
+		HAL_Delay(100);
+		}
+}
 
 int16_t ConvertTwoComplement(uint16_t input)
 {
@@ -76,4 +115,33 @@ void DEV_I2CReadRegister(uint16_t add, uint16_t registeradd, uint8_t * pBuffer)
 			Error_Handler();
 		  }
 		}
+}
+
+void ModeExecution(void)
+{
+	if(ITdet)
+	{
+		uint32_t tick = HAL_GetTick();
+		while(HAL_GetTick() < tick + 15000)
+		{
+			switch (CurrentMode)
+			{
+				case Acc :
+				{
+					ACC_LedMode();
+					break;
+				}
+				case Compass :
+				{
+					MAG_CompassMode();
+					break;
+				}
+				default :
+					DEV_LedInterlude2();
+			}
+		}
+		DEV_LedClear();
+		DEV_LedInterlude2();
+	}
+	ITdet = 0;
 }

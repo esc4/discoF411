@@ -69,15 +69,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	userMode CurrentMode = Acc;
-
-	uint8_t RxBufferACC[6] = {0,0,0,0,0,0};		// TODO Encapsulate in ACC_GetXYZ ?
-	uint8_t RxBufferMAG[6] = {0,0,0,0,0,0};
-	uint8_t RxBufferTemp[2] = {0,0};
-
-	int16_t outLX, outLY, outLZ = 0;
-	int16_t outMX, outMY, outMZ = 0;
-	int16_t temp = 0;
 
 	uint8_t RxBufferDebug = 0;
   /* USER CODE END 1 */
@@ -104,11 +95,15 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   HAL_I2C_MspInit(&hi2c1);
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
   ACC_Conf();
   MAG_Conf();
-  DEV_LedInterlude1();
-  DEV_LedInterlude2();
+  //DEV_LedInterlude1();
+  //DEV_LedInterlude2();
   //DEV_I2CReadRegister(MAG_ADD, CRB_REG_M, &RxBufferDebug);
   /* USER CODE END 2 */
 
@@ -116,34 +111,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  while((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) == 0) {}
-
-	  HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 1 ? CurrentMode = !CurrentMode:1;
-	  while((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) == 1);
-
-	  switch (CurrentMode)
-	  {
-	  case Acc :
-	  {
-		  ACC_GetXYZ(RxBufferACC, &outLX, &outLY, &outLZ);
-		  ACC_LedMode(outLX, outLY, outLZ);
-		  break;
-	  }
-	  case Compass :
-	  {
-		  MAG_GetXYZ(RxBufferMAG, &outMX, &outMY, &outMZ);
-		  MAG_GetTemp(RxBufferTemp, &temp);
-		  MAG_CompassMode(outMX, outMY);
-		  break;
-	  }
-	  default :
-		  DEV_LedInterlude2();
-	  }
-
+	  ModeExecution();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
   }
   /* USER CODE END 3 */
 

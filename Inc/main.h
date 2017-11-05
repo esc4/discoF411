@@ -39,16 +39,18 @@
 #ifndef __MAIN_H
 #define __MAIN_H
   /* Includes ------------------------------------------------------------------*/
+#include "stm32f4xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-#define TRUE 1
-#define FALSE 0
+
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
 
 #define CS_I2C_SPI_Pin GPIO_PIN_3
 #define CS_I2C_SPI_GPIO_Port GPIOE
+#define LSM_INT1_Pin GPIO_PIN_4
+#define LSM_INT1_GPIO_Port GPIOE
 #define PC14_OSC32_IN_Pin GPIO_PIN_14
 #define PC14_OSC32_IN_GPIO_Port GPIOC
 #define PC15_OSC32_OUT_Pin GPIO_PIN_15
@@ -111,7 +113,8 @@
 #define MEMS_INT2_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
-
+#define TRUE 1
+#define FALSE 0
 /* USER CODE END Private defines */
 
 void _Error_Handler(char *, int);
